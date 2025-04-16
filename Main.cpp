@@ -5,6 +5,7 @@
 MatrixGraph<Room> gameMap(20);
 
 int main() {
+<<<<<<< HEAD
 	
 	gameMap.generateMap(); //generates map with 20 vertices
 
@@ -41,4 +42,9 @@ int main() {
         }//switch end
     }//while end
 }//main end
+=======
+	gameMap.generateMap(20); //generates map with 20 vertices
+	gameMap.printMatrix();
+}
+>>>>>>> 74c5effe5a8bc81160ff008989a4bb8412687e20
 
