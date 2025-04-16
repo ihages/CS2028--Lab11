@@ -1,10 +1,44 @@
 #include<iostream>
 #include "Graph.h"
+#include "Room.h"
 
-MatrixGraph<int> gameMap;
+MatrixGraph<Room> gameMap(20);
 
 int main() {
-	gameMap.generateMap();
-	gameMap.printMatrix();
-}
+	
+	gameMap.generateMap(); //generates map with 20 vertices
+
+    std::cout << "\tHunt the Wumpus!" << std::endl;
+    int choice = 1;
+    while (choice) {
+        std::cout << "*****************************" << std::endl;
+        std::cout << "Choose one of the following options:\n1: Observe Room\n2: Move Room\n3: Shoot Arrow\n4. Quit" << std::endl;
+        std::cin >> choice;
+        //menu system 
+        switch (choice) {
+        case 1: {
+            //observe
+            break;
+        }
+
+        case 2: {
+            //move
+            break;
+        }
+
+        case 3: {
+            //shoot
+            break;
+        }
+        case 4: {
+            //quit
+            return 0;
+            break;
+        }
+        case 5: { //secret unit test
+            gameMap.printMatrix(); //prints for sake of testing
+        }
+        }//switch end
+    }//while end
+}//main end
 
