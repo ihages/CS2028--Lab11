@@ -28,6 +28,8 @@ public:
 	void printMatrix();
 	void generateMap();
 	bool hasEdge(int start, int end);
+	int neighborRooms(int room);
+	int* returnNeighbors(int room);
 
 };
 

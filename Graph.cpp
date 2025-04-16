@@ -63,7 +63,8 @@ void MatrixGraph<T>::generateMap() {
 	addEdge(19, 20);
 }
 
-bool hasEdge(int start, int end) {
+template<class T>
+bool MatrixGraph<T>::hasEdge(int start, int end) {
 	return matrix[start][end];
 }
 
@@ -73,6 +74,31 @@ MatrixGraph<T>::~MatrixGraph() {
 		delete[] matrix[i];
 	}
 	delete[] matrix;
+}
+
+template<class T>
+int MatrixGraph<T>::neighborRooms(int room) {
+	int numNeighbors = 0;
+	for (int i = 0; i < numVertices; i++) {
+		if (matrix[room][i]) {
+			numNeighbors++;
+		}
+	}
+	return numNeighbors;
+}
+
+template<class T>
+int* MatrixGraph<T>::returnNeighbors(int room) {
+	int numNeighbors = neighborRooms(room);
+	int* neighbors = new int[numNeighbors];
+	int j = 0;
+	for (int i = 0; i < numVertices; i++) {
+		if (matrix[room][i]) {
+			neighbors[j] = i +1; 
+			j++;
+		}
+	}
+	return neighbors;
 }
 
 template class MatrixGraph<Room>;

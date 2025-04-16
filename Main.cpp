@@ -5,12 +5,10 @@
 MatrixGraph<Room> gameMap(20);
 
 int main() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> da845027e7f0effdde5becf99755c98f42ac2498
 	
 	gameMap.generateMap(); //generates map with 20 vertices
+	int playerRoom = 0; //player starts in room 1
+	int wumpusRoom = rand() % 18 + 2; //randomly generates wumpus room
 
     std::cout << "\tHunt the Wumpus!" << std::endl;
     int choice = 1;
@@ -27,6 +25,23 @@ int main() {
 
         case 2: {
             //move
+			std::cout << "You are in room " << playerRoom + 1 << std::endl;
+			std::cout << "These are the rooms next to you:" << std::endl;
+            for (int i = 0; i < gameMap.neighborRooms(playerRoom); i++) {
+                std::cout << gameMap.returnNeighbors(playerRoom)[i] << " " << std::endl;
+            }
+			std::cout << "Which room would you like to move to?" << std::endl;
+			int moveRoom;
+			std::cin >> moveRoom;
+            if (gameMap.hasEdge(playerRoom, moveRoom - 1)) {
+                playerRoom = moveRoom - 1;
+				std::cout << "You have moved to room " << playerRoom + 1 << std::endl;
+                //make it so that it marks the previous player room as visited and you cannot return to it. update the if/else and print to account for it
+                //add in the room conditions here
+			}
+			else {
+				std::cout << "You cannot move to that room!" << std::endl;
+			}
             break;
         }
 
@@ -40,17 +55,14 @@ int main() {
             break;
         }
         case 5: { //secret unit test
+            std::cout << "Here is the matrix:" << std::endl;
             gameMap.printMatrix(); //prints for sake of testing
+			std::cout << "\nThese are the rooms next to the player at spawn:" << std::endl;
+			for (int i = 0; i < gameMap.neighborRooms(playerRoom); i++) {
+                std::cout << gameMap.returnNeighbors(playerRoom)[i] << " " << std::endl;
+			}
         }
         }//switch end
     }//while end
 }//main end
-<<<<<<< HEAD
-=======
-	gameMap.generateMap(20); //generates map with 20 vertices
-	gameMap.printMatrix();
-}
->>>>>>> 74c5effe5a8bc81160ff008989a4bb8412687e20
-=======
->>>>>>> da845027e7f0effdde5becf99755c98f42ac2498
 

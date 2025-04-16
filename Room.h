@@ -2,10 +2,12 @@
 #define __ROOM__
 
 class Room {
+	int roomNumber;
 	std::string roomType;
+	bool hasArrow;
 
-	Room() : roomType(" ") {};
-	Room(std::string contents) : roomType(contents) {};
+	Room() : roomType(" "), roomNumber(), hasArrow(false){};
+	Room(std::string contents) : roomType(contents), roomNumber(), hasArrow(false) {};
 
 	void setRoom(std::string contents) {
 		roomType = contents;
