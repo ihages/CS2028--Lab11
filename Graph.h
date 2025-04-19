@@ -1,11 +1,15 @@
 #pragma once
 #include <iostream>
+#include <ctime>
+
+#include "Room.h"
 
 template<class T>
 class MatrixGraph {
 private:
 	bool** matrix;
 	int numVertices;
+	T* vertices;
 	
 public:
 	//constructor (sets all to zero)
@@ -18,6 +22,7 @@ public:
 				matrix[i][j] = false;
 			}
 		}
+		vertices = new T[numVertices];
 	}
 	
 	//destructor
@@ -28,8 +33,11 @@ public:
 	void printMatrix();
 	void generateMap();
 	bool hasEdge(int start, int end);
-	int neighborRooms(int room);
+	int numNeighborRooms(int room);
 	int* returnNeighbors(int room);
+
+	void setVertexData(int vertex, const T& data);
+	T& getVertexData(int vertex);
 
 };
 

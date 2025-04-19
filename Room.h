@@ -2,33 +2,42 @@
 #define __ROOM__
 
 class Room {
-	int roomNumber;
-	std::string roomType;
-	bool hasArrow;
+	private:
+		int roomNumber;
+		std::string roomType;
+		bool hasArrow;
+		bool playerVisited;
 
-	Room() : roomType(" "), roomNumber(), hasArrow(false){};
-	Room(std::string contents) : roomType(contents), roomNumber(), hasArrow(false) {};
+	public:
+		Room() : roomType(" "), roomNumber(-1), hasArrow(false), playerVisited(false) {};
+		Room(std::string contents) : roomType(contents), roomNumber(-1), hasArrow(false), playerVisited(false) {};
+		Room(std::string contents, int roomNum) : roomType(contents), roomNumber(roomNum), hasArrow(false), playerVisited(false) {};
 
-	void setRoom(std::string contents) {
-		roomType = contents;
-	}
-	bool isRoomEmpty() { return roomType != "Bats" || roomType != "Pit" || roomType != "Wumpus"; }
+		bool isRoomEmpty() { return roomType != "Bats" && roomType != "Pit" && roomType != "Wumpus"; }
 
-	friend std::ostream& operator<<(std::ostream& os, const Room& right) {
-		if (right.roomType == "Bats") {
-			os << "You hear screeching";
+		std::string roomMessage() {
+			if (roomType == "Bats") {
+				return "You hear screeching";
+			}
+			else if (roomType == "Pit") {
+				return "You feel a breeze";
+			}
+			else if (roomType == "Wumpus") {
+				return "You smell an animal";
+			}
+			else {
+				return "";
+			}
 		}
-		else if (right.roomType == "Pit") {
-			os << "You feel a breeze";
+
+		void visitRoom() {
+			playerVisited = true;
 		}
-		else if (right.roomType == "Wumpus") {
-			os << "You smell an animal";
-		}
-		else {
-			os << "";
-		}
-		return os;
-	}
+		
+
+		int getRoomNumber() { return roomNumber; }
+		std::string getRoomType() { return roomType; }
+
 };
 
 #endif
