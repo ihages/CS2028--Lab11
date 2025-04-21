@@ -31,6 +31,10 @@ class Room {
 			playerVisited = true;
 		}
 
+		bool getVisited() {
+			return playerVisited;
+		}
+
 		void arrowLanded() {
 			hasArrow = true;
 		}

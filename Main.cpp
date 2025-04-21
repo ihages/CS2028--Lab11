@@ -16,21 +16,23 @@ int main() {
 	
 	gameMap.generateMap(); //generates map with 20 vertices
 
-    Room &playerRoom = gameMap.getVertexData(0);
-    playerRoom.visitRoom();
+    Room &startingRoom = gameMap.getVertexData(0);
+    startingRoom.visitRoom();
+    Room playerRoom = startingRoom;
+
     int playerQuiver = 3;
 
-    for (int i{}; i < 20; i++) {
-        Room curRoom = gameMap.getVertexData(i);
-        if (!curRoom.isRoomEmpty()) {
-            std::cout << curRoom.getRoomNumber() << ": " << curRoom.getRoomType() << std::endl;
-        }
-    }
 
     std::cout << "\tHunt the Wumpus!" << std::endl;
     int choice = 1;
     while (choice) {
         std::cout << "*****************************" << std::endl;
+        /*for (int i{}; i < 20; i++) {   //Show location of hazards TESTING
+            Room curRoom = gameMap.getVertexData(i);
+            if (!curRoom.isRoomEmpty()) {
+                std::cout << curRoom.getRoomNumber() << ": " << curRoom.getRoomType() << std::endl;
+            }
+        }*/
         std::cout << "You are in room " << playerRoom.getRoomNumber() << std::endl;
         std::cout << "You have " << playerQuiver << " arrows in your quiver." << std::endl;
         std::cout << "Choose one of the following options:\n1: Observe Room\n2: Move Room\n3: Shoot Arrow\n4. Quit" << std::endl;
@@ -40,7 +42,7 @@ int main() {
         case 1: {
             //observe
             std::cout << "These are the rooms next to you:" << std::endl;
-            for (int i = 0; i < gameMap.numNeighborRooms(playerRoom.getRoomNumber()); i++) {    //Print neighboring room numbers
+            for (int i = 0; i < gameMap.numNeighborRooms(playerRoom.getRoomIndex()); i++) {    //Print neighboring room numbers
                 Room curRoom = gameMap.getVertexData(gameMap.returnNeighbors(playerRoom.getRoomIndex())[i] - 1);
                 std::cout << gameMap.returnNeighbors(playerRoom.getRoomIndex())[i];
                 if (curRoom.isVisited()) {  //Check if room is visited
@@ -48,7 +50,7 @@ int main() {
                 }
                 std::cout << std::endl;
             }
-            for (int i = 0; i < gameMap.numNeighborRooms(playerRoom.getRoomNumber()); i++) {    //Print room messages
+            for (int i = 0; i < gameMap.numNeighborRooms(playerRoom.getRoomIndex()); i++) {    //Print room messages
                 Room curRoom = gameMap.getVertexData(gameMap.returnNeighbors(playerRoom.getRoomIndex())[i] - 1);
                 if (!curRoom.isRoomEmpty()) {
                     std::cout << curRoom.roomMessage() << std::endl;
@@ -58,11 +60,12 @@ int main() {
         }
         case 2: {
             //move
+            playerRoom.visitRoom();
 			std::cout << "Which room would you like to move to?" << std::endl;
 			int moveRoom;
 			std::cin >> moveRoom;
             if (gameMap.hasEdge(playerRoom.getRoomNumber(), moveRoom)) {    //Check if room is a valid move
-                Room& nextRoom = gameMap.getVertexData(moveRoom - 1);
+                Room &nextRoom = gameMap.getVertexData(moveRoom - 1);
                 nextRoom.visitRoom();
                 playerRoom = nextRoom;
 
@@ -87,9 +90,12 @@ int main() {
                 } else {    //Didnt enter a hazard room
                     std::cout << "You have moved to room " << playerRoom.getRoomNumber() << std::endl;
                     if (playerRoom.isArrowHere()) {
-                        playerRoom.pickupArrow();
+                        Room& tempRoom = gameMap.getVertexData(playerRoom.getRoomIndex());
+                        std::cout << "You found an arrow!" << std::endl;
+                        tempRoom.pickupArrow();
+                        playerQuiver++;
+                        playerRoom = tempRoom;
                     }
-                    //Check if arrow is in room
                 }
 			}
 			else {
@@ -135,11 +141,21 @@ int main() {
                 std::cout << gameMap.returnNeighbors(playerRoom.getRoomIndex())[i] << " " << std::endl;
 			}
             std::cout << "\nLocation of the different hazards:" << std::endl;
-            for (int i{}; i < 20; i++) {    //Show location of hazards
+            for (int i{0}; i < 20; i++) {    //Show location of hazards
                 Room curRoom = gameMap.getVertexData(i);
                 if (!curRoom.isRoomEmpty()) {
                     std::cout << curRoom.getRoomNumber() << ": " << curRoom.getRoomType() << std::endl;
                 }
+            }
+			std::cout << "\nThese are the rooms that have been visited:" << std::endl;
+            for (int i{0}; i < 20; i++) {
+				Room tempRoom = gameMap.getVertexData(i);
+                std::cout << tempRoom.getRoomNumber() << ": " << tempRoom.getVisited() << std::endl;
+			}
+            std::cout << "\nThese are the rooms that have arrows:" << std::endl;
+            for (int i{ 0 }; i < 20; i++) {
+                Room tempRoom = gameMap.getVertexData(i);
+                std::cout << tempRoom.getRoomNumber() << ": " << tempRoom.isArrowHere() << std::endl;
             }
 
         }
