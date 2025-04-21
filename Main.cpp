@@ -20,6 +20,13 @@ int main() {
     playerRoom.visitRoom();
     int playerQuiver = 3;
 
+    for (int i{}; i < 20; i++) {
+        Room curRoom = gameMap.getVertexData(i);
+        if (!curRoom.isRoomEmpty()) {
+            std::cout << curRoom.getRoomNumber() << ": " << curRoom.getRoomType() << std::endl;
+        }
+    }
+
     std::cout << "\tHunt the Wumpus!" << std::endl;
     int choice = 1;
     while (choice) {
