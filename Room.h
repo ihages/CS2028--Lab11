@@ -18,14 +18,11 @@ class Room {
 		std::string roomMessage() {
 			if (roomType == "Bats") {
 				return "You hear screeching";
-			}
-			else if (roomType == "Pit") {
+			} else if (roomType == "Pit") {
 				return "You feel a breeze";
-			}
-			else if (roomType == "Wumpus") {
+			} else if (roomType == "Wumpus") {
 				return "You smell an animal";
-			}
-			else {
+			} else {
 				return "";
 			}
 		}
@@ -33,10 +30,29 @@ class Room {
 		void visitRoom() {
 			playerVisited = true;
 		}
-		
+
+		void arrowLanded() {
+			hasArrow = true;
+		}
+
+		void pickupArrow() {
+			hasArrow = false;
+		}
+
+		void setRoomType(std::string updatedRoom) {
+			roomType = updatedRoom;
+		}
 
 		int getRoomNumber() { return roomNumber; }
+		int getRoomIndex() { return roomNumber - 1; }
 		std::string getRoomType() { return roomType; }
+		bool isVisited() { return playerVisited; }
+		bool isArrowHere() { return hasArrow; }
+		bool isWumpusRoom() { return roomType == "Wumpus"; }
+
+		bool operator== (const Room &right) {
+			return this->roomNumber == right.roomNumber;
+		}
 
 };
 

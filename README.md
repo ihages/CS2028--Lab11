@@ -12,3 +12,9 @@ Added vertices array for keeping track of all the rooms.
 Need to add functionality for shooting arrows, hitting the wumpus, wumpus moving, winning if you enter wumpus room with arrow, or losing if you enter without arrows. 
 
 Currently nothing is done based on whether a room was visited or not. Should probably add something like "(visited)" to room that you have visited when observing.
+
+April 21, 1:43 PM Evan O
+- Added arrow pathing
+- Added Wumpus pathing
+- Added messages for arrows
+- Moved locations of hazards text into print
